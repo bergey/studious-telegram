@@ -1,0 +1,5 @@
+packages: cabal-new-build.cabal
+
+package zlib
+  extra-include-dirs: /usr/include
+  extra-lib-dirs: /usr/lib
