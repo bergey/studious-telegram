@@ -19,6 +19,7 @@ executable servant-bench
   -- other-modules:
   -- other-extensions:
   build-depends:       base
+                     , semigroups
                      , servant
                      , servant-server
                      , text
