@@ -17,7 +17,7 @@ data Benchmark = Benchmark
     , benchmarkCase :: Text
     } deriving (Show, Read, Eq)
 
--- This is the code output from TH.hs with -ddump-splices
+-- This is the code output from th/Main.hs with -ddump-splices
 class HasCategory s a | s -> a where
   category :: Lens' s a
 instance HasCategory Benchmark Text where
