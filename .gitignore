@@ -1,1 +1,3 @@
-/cabal-new-build/.ghc.environment.x86_64-darwin-8.2.2
+cabal-new-build
+.stack-work
+.cabal-sandbox
