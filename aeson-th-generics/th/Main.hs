@@ -22,7 +22,7 @@ data Benchmark = Benchmark
 $(deriveJSON defaultOptions ''Benchmark)
 
 benchmark :: Benchmark
-benchmark = Benchmark "lens-th" "lens" "th"
+benchmark = Benchmark "aeson-th" "aeson" "th"
 
 main :: IO ()
 main = do

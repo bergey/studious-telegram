@@ -25,7 +25,7 @@ instance FromJSON Benchmark
 instance ToJSON Benchmark
 
 benchmark :: Benchmark
-benchmark = Benchmark "lens-th" "lens" "th"
+benchmark = Benchmark "aeson-generics" "aeson" "generics"
 
 main :: IO ()
 main = do

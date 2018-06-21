@@ -41,7 +41,7 @@ instance HasVariant Benchmark Text where
             (f_aabe x3_aabh)
 
 benchmark :: Benchmark
-benchmark = Benchmark "lens-th" "lens" "th"
+benchmark = Benchmark "lens-manual" "lens" "manual"
 
 main :: IO ()
 main = do
