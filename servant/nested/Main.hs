@@ -14,32 +14,52 @@ import qualified Data.Text as T
 
 
 type MainAPI =
-    "static" :> StaticAPI
-    :<|> "authenticated" :> AuthenticatedAPI
+    "1" :> One
+    :<|> "2" :> Two
+    :<|> "3" :> Three
+    :<|> "4" :> Four
 
-type StaticAPI =
-        "foo" :> Get '[JSON] Text
-        :<|> "bar" :> Get '[JSON] Text
+type One =
+    "1" :> Get '[JSON] Text
+    :<|> "2" :> Get '[JSON] Text
+    :<|> "3" :> Get '[JSON] Text
+    :<|> "4" :> Get '[JSON] Text
 
-type AuthenticatedAPI = Capture "echo" Text :> (
-        "baz" :> Get '[JSON] Text
-        :<|> "quux" :> Get '[JSON] Text
-        :<|> "wibble" :> Get '[JSON] Text
-        )
+type Two =
+    "1" :> Get '[JSON] Text
+    :<|> "2" :> Get '[JSON] Text
+    :<|> "3" :> Get '[JSON] Text
+    :<|> "4" :> Get '[JSON] Text
+
+type Three =
+    "1" :> Get '[JSON] Text
+    :<|> "2" :> Get '[JSON] Text
+    :<|> "3" :> Get '[JSON] Text
+    :<|> "4" :> Get '[JSON] Text
+
+type Four =
+    "1" :> Get '[JSON] Text
+    :<|> "2" :> Get '[JSON] Text
+    :<|> "3" :> Get '[JSON] Text
+    :<|> "4" :> Get '[JSON] Text
 
 mainServer :: Server MainAPI
-mainServer = static
-    :<|> authenticated
+mainServer = one :<|> two :<|> three :<|> four
 
-static = foo :<|> bar
+one :: Server One
+one = foo :<|> foo :<|> foo :<|> foo
 
-authenticated e = baz e :<|> quux e :<|> wibble e
+two :: Server Two
+two = foo :<|> foo :<|> foo :<|> foo
 
+three :: Server Three
+three = foo :<|> foo :<|> foo :<|> foo
+
+four :: Server Four
+four = foo :<|> foo :<|> foo :<|> foo
+
+foo :: Monad m => m Text
 foo = return "foo"
-bar = return "bar"
-baz e = return ("baz = " <> e)
-quux e = return ("quux = " <> e)
-wibble e = return ("wibble = " <> e)
 
 main :: IO ()
 main = runSettings defaultSettings $
