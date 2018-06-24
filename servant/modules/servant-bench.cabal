@@ -20,6 +20,10 @@ executable servant-bench
                , Two
                , Three
                , Four
+               , Five
+               , Six
+               , Seven
+               , Eight
     -- other-extensions:
   build-depends:       base >=4.10 && <4.11
                      , servant

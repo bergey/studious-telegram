@@ -7,6 +7,10 @@ import One
 import Two
 import Three
 import Four
+import Five
+import Six
+import Seven
+import Eight
 
 import Data.Text (Text)
 import           Servant hiding (NotSecure)
@@ -19,9 +23,13 @@ type MainAPI =
     :<|> "2" :> Two
     :<|> "3" :> Three
     :<|> "4" :> Four
+    :<|> "5" :> Five
+    :<|> "6" :> Six
+    :<|> "7" :> Seven
+    :<|> "8" :> Eight
 
 mainServer :: Server MainAPI
-mainServer = one :<|> two :<|> three :<|> four
+mainServer = one :<|> two :<|> three :<|> four :<|> five :<|> six :<|> seven :<|> eight
 
 main :: IO ()
 main = runSettings defaultSettings $

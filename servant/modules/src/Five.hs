@@ -2,13 +2,13 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module Four where
+ module Five where
 
 import Data.Text (Text)
 import           Servant hiding (NotSecure)
 import           Servant.Server
 
-type Four =
+type Five =
     "1" :> Get '[JSON] Text
     :<|> "2" :> Get '[JSON] Text
     :<|> "3" :> Get '[JSON] Text
@@ -18,8 +18,8 @@ type Four =
     :<|> "7" :> Get '[JSON] Text
     :<|> "8" :> Get '[JSON] Text
 
-four :: Server Four
-four = foo :<|> foo :<|> foo :<|> foo
+five :: Server Five
+five = foo :<|> foo :<|> foo :<|> foo
     :<|> foo :<|> foo :<|> foo :<|> foo
 
 foo :: Monad m => m Text
