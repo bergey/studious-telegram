@@ -1,36 +1,34 @@
 # https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/separate_compilation.html#using-make
+# all commands to be called from within nix-shell
 
 HC      = ghc
-HC_OPTS = -cpp $(EXTRA_HC_OPTS)
+HC_OPTS = -cpp -outputdir dist/build -odir dist/build -hidir dist/build -stubdir dist/build -i -idist/build -isrc -iapp -idist/build/autogen -idist/build/global-autogen -Idist/build/autogen -Idist/build/global-autogen -Idist/build $(EXTRA_HC_OPTS) 
 
-SRCS = Main.lhs Foo.lhs Bar.lhs
-OBJS = Main.o   Foo.o   Bar.o
+SRCS = $(shell find src -name '*.hs')
+OBJS = $(patsubst %.c,%.o, ${SRCS})
+# TODO test program
 
-.SUFFIXES : .o .hs .hi .lhs .hc .s
+studious-telegram : $(OBJS) app/Main.o
+	rm -f $@
+	$(HC) -o $@ $(HC_OPTS) $(OBJS)
 
-cool_pgm : $(OBJS)
-        rm -f $@
-        $(HC) -o $@ $(HC_OPTS) $(OBJS)
+%.o : %.hs
+	$(HC) -c $< $(HC_OPTS)
 
 # Standard suffix rules
-.o.hi:
-        @:
+%.hi: %.o
+	@:
 
-.lhs.o:
-        $(HC) -c $< $(HC_OPTS)
+depends.mk: $(SRCS)
+	ghc -M -dep-makefile $@ -dep-suffix '' $(SRCS)
+include depends.mk
 
-.hs.o:
-        $(HC) -c $< $(HC_OPTS)
+default.nix: package.yaml
+	nix-shell -p cabal2nix --run 'cabal2nix . > default.nix'
 
-.o-boot.hi-boot:
-        @:
+shell: default.nix
+	nix-shell --command "export PS1='[make -M] $(value PS1)'; return"
 
-.lhs-boot.o-boot:
-        $(HC) -c $< $(HC_OPTS)
-
-.hs-boot.o-boot:
-        $(HC) -c $< $(HC_OPTS)
-
-# Inter-module dependencies
-Foo.o Foo.hc Foo.s    : Baz.hi          # Foo imports Baz
-Main.o Main.hc Main.s : Foo.hi Baz.hi   # Main imports Foo and Baz
+clean:
+	rm -r dist
+	rm studious-telegram
